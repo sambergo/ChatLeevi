@@ -223,7 +223,7 @@ const Home = () => {
         <View style={{ flex: 1 }} />
         <View style={styles.button}>
           <Button
-            title={recording ? "Stop Recording" : "Start Recording"}
+            title={recording ? "Lopeta nauhoitus" : "Nauhoita kysymys"}
             onPress={recording ? stopRecording : startRecording}
             color={theme.Charcoal}
           />
