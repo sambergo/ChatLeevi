@@ -1,4 +1,5 @@
 import { Audio } from "expo-av";
+import { ScrollView } from "react-native";
 import { Recording } from "expo-av/build/Audio";
 import * as Speech from "expo-speech";
 import React, { useCallback, useEffect, useState } from "react";
@@ -23,7 +24,7 @@ const Home = () => {
   useEffect(() => {
     const fetchSavedKey = async () => {
       const savedKey = await getSavedKey();
-      setOpenaiApiKey(savedKey ?? null);
+      setOpenaiApiKey(savedKey ?? "");
     };
     fetchSavedKey();
   }, []);
@@ -127,8 +128,8 @@ const Home = () => {
     const uri = recording.getURI();
     console.log("Recording stopped and stored at", uri);
     const { text } = await sendToWhisper(uri);
-    console.log("text:", text);
-    if (typeof text === "string" || text.length <= 4) {
+    if (typeof text === "string" && text.length > 2) {
+      console.log("text:", text);
       const gptAnswer = await sendToGPT(text);
       console.log("gptAnswer", gptAnswer);
     }
@@ -137,8 +138,12 @@ const Home = () => {
   return (
     <View style={styles.container}>
       <MainCharacter />
-      <View style={{ flex: 1, justifyContent: "flex-end" }}>
-        <Text style={styles.text}>{leevisAnswer}</Text>
+      <View style={styles.answerBox}>
+        {leevisAnswer ? (
+          <ScrollView>
+            <Text style={styles.text}>{leevisAnswer}</Text>
+          </ScrollView>
+        ) : null}
       </View>
       <View style={styles.buttonContainer}>
         <View style={{ flex: 1 }} />
