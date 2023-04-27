@@ -2,12 +2,12 @@ import { StyleSheet } from "react-native";
 
 export const theme = {
   BattleshipGray: "#888D90",
-  RichBlack: "#0B1722",
-  RichBlack2: "#040A14",
+  RichBlack: "#252a34",
+  RichBlack2: "#6b747c",
   FrenchGray: "#AFB2B5",
   Charcoal: "#2F3C46",
+  NearWhite: "#F2F2F2",
 };
-
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -23,8 +23,6 @@ export const styles = StyleSheet.create({
     maxHeight: "35%",
     width: "100%",
     // marginTop: "5%",
-    // borderWidth: 4,
-    // borderColor: "red",
   },
   mainCharacterImage: {
     resizeMode: "contain",
@@ -39,7 +37,7 @@ export const styles = StyleSheet.create({
     justifyContent: "flex-end",
   },
   text: {
-    color: theme.BattleshipGray,
+    color: theme.NearWhite,
     marginBottom: 16,
     padding: 8,
     minWidth: "90%",
@@ -57,7 +55,6 @@ export const styles = StyleSheet.create({
     margin: 16,
     backgroundColor: theme.FrenchGray,
     borderColor: theme.BattleshipGray,
-    // borderWidth: 1,
     borderRadius: 8,
     padding: 16,
   },

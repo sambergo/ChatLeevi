@@ -138,20 +138,20 @@ const Home = () => {
   return (
     <View style={styles.container}>
       <MainCharacter />
-      <View style={styles.answerBox}>
-        {leevisAnswer ? (
+      {leevisAnswer ? (
+        <View style={styles.answerBox}>
           <ScrollView>
             <Text style={styles.text}>{leevisAnswer}</Text>
           </ScrollView>
-        ) : null}
-      </View>
+        </View>
+      ) : null}
       <View style={styles.buttonContainer}>
         <View style={{ flex: 1 }} />
         <View style={styles.button}>
           <Button
             title={recording ? "Lopeta nauhoitus" : "Nauhoita kysymys"}
             onPress={recording ? stopRecording : startRecording}
-            color={theme.Charcoal}
+            color={theme.RichBlack2}
           />
         </View>
         <View style={{ flex: 1 }} />
