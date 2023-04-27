@@ -3,9 +3,94 @@ import { Audio } from "expo-av";
 import { Recording } from "expo-av/build/Audio";
 import * as Speech from "expo-speech";
 import React, { useEffect, useState } from "react";
-import { Button, StyleSheet, Text, View } from "react-native";
+import { Button, Image, StyleSheet, Text, View } from "react-native";
 import { getSavedKey } from "./Settings";
 import { Ionicons } from "@expo/vector-icons";
+
+const theme = {
+  BattleshipGray: "#888D90",
+  RichBlack: "#0B1722",
+  RichBlack2: "#040A14",
+  FrenchGray: "#AFB2B5",
+  Charcoal: "#2F3C46",
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: theme.RichBlack,
+    alignItems: "center",
+    justifyContent: "flex-start",
+    padding: 16,
+  },
+
+  // mainCharacterContainer: {
+  //   flex: 1,
+  //   justifyContent: "center",
+  //   alignItems: "center",
+  //   height: "100%",
+  //   maxHeight: "50%",
+  //   alignSelf: "center",
+  //   width: "100%",
+  //   borderWidth: 4,
+  //   borderColor: "red",
+  // },
+
+  mainCharacterContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    flex: 1,
+    maxHeight: "90%",
+    width: "100%",
+    marginTop: "25%",
+    // borderWidth: 4,
+    // borderColor: "red",
+  },
+
+  mainCharacterImage: {
+    resizeMode: "contain",
+    height: "100%",
+    width: "90%",
+  },
+  text: {
+    color: theme.BattleshipGray,
+    marginBottom: 16,
+  },
+  buttonContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "100%",
+  },
+  button: {
+    flex: 1,
+    margin: 16,
+    backgroundColor: theme.FrenchGray,
+    borderColor: theme.BattleshipGray,
+    borderWidth: 1,
+    borderRadius: 8,
+    padding: 16,
+  },
+  buttonText: {
+    color: theme.RichBlack2,
+    textAlign: "center",
+  },
+  icon: {
+    position: "absolute",
+    top: 0,
+    right: 0,
+    margin: 16,
+    color: theme.BattleshipGray,
+  },
+});
+
+const MainCharacter = () => (
+  <View style={styles.mainCharacterContainer}>
+    <Image
+      source={require("../assets/academic-leevi-transformed.png")}
+      style={styles.mainCharacterImage}
+    />
+  </View>
+);
 
 const Home = () => {
   const [recording, setRecording] = useState<Recording | undefined>(undefined);
@@ -124,50 +209,29 @@ const Home = () => {
 
   return (
     <View style={styles.container}>
+      <MainCharacter />
       <Ionicons
         name="settings-outline"
         size={24}
-        color="black"
         onPress={() => navigation.navigate("Settings")}
-        style={{ position: "absolute", top: 0, right: 0, margin: 16 }}
+        style={styles.icon}
       />
       <View style={{ flex: 1, justifyContent: "flex-end" }}>
-        <Text>{leevisAnswer}</Text>
+        <Text style={styles.text}>{leevisAnswer}</Text>
       </View>
-      <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-        <View style={{ flex: 1 }}></View>
-        <View style={{ flex: 1, marginBottom: 16 }}>
+      <View style={styles.buttonContainer}>
+        <View style={{ flex: 1 }} />
+        <View style={styles.button}>
           <Button
             title={recording ? "Stop Recording" : "Start Recording"}
             onPress={recording ? stopRecording : startRecording}
+            color={theme.Charcoal}
           />
         </View>
-        <View style={{ flex: 1 }}></View>
+        <View style={{ flex: 1 }} />
       </View>
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "flex-start",
-    padding: 16,
-  },
-  row: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  fill: {
-    flex: 1,
-    margin: 16,
-  },
-  button: {
-    margin: 16,
-  },
-});
 
 export default Home;
