@@ -1,11 +1,12 @@
 import { Audio } from "expo-av";
-import { ScrollView } from "react-native";
 import { Recording } from "expo-av/build/Audio";
 import * as Speech from "expo-speech";
 import React, { useCallback, useEffect, useState } from "react";
-import { Button, Image, Text, View } from "react-native";
+import { Button, Image, ScrollView, Text, View } from "react-native";
 import { styles, theme } from "../theme";
 import { getSavedKey } from "./Settings";
+import { prompts } from "../prompts";
+import { Picker } from "@react-native-picker/picker";
 
 const MainCharacter = () => (
   <View style={styles.mainCharacterContainer}>
@@ -18,7 +19,12 @@ const MainCharacter = () => (
 
 const Home = () => {
   const [recording, setRecording] = useState<Recording | undefined>(undefined);
-  const [leevisAnswer, setLeevisAnswer] = useState<string | null>(null);
+  const [leevisAnswer, setLeevisAnswer] = useState<string>(
+    "Hau hau, kuinka voin auttaa?"
+  );
+
+  const [selectedPrompt, setSelectedPrompt] = useState("");
+
   const [OPENAI_API_KEY, setOpenaiApiKey] = useState<string>("");
 
   useEffect(() => {
@@ -29,7 +35,7 @@ const Home = () => {
     fetchSavedKey();
   }, []);
 
-  const sendToWhisper = async (uri: string) => {
+  const sendToWhisper = async (uri: string): Promise<any> => {
     const model = "whisper-1";
     const formData = new FormData();
     formData.append("file", {
@@ -60,7 +66,7 @@ const Home = () => {
   };
 
   const sendToGPT = useCallback(
-    async (prompt: string) => {
+    async (prompt: string): Promise<any> => {
       if (!OPENAI_API_KEY) {
         console.error("OPENAI API KEY NOT FOUND");
         return null;
@@ -98,7 +104,7 @@ const Home = () => {
     [OPENAI_API_KEY]
   );
 
-  async function startRecording() {
+  async function handleStartRecording() {
     try {
       console.log("Requesting permissions..");
       await Audio.requestPermissionsAsync();
@@ -118,7 +124,7 @@ const Home = () => {
     }
   }
 
-  async function stopRecording() {
+  async function handleStopRecording() {
     console.log("Stopping recording..");
     setRecording(undefined);
     await recording.stopAndUnloadAsync();
@@ -127,10 +133,13 @@ const Home = () => {
     });
     const uri = recording.getURI();
     console.log("Recording stopped and stored at", uri);
-    const { text } = await sendToWhisper(uri);
-    if (typeof text === "string" && text.length > 2) {
-      console.log("text:", text);
-      const gptAnswer = await sendToGPT(text);
+    const { text: whisperText } = await sendToWhisper(uri);
+    if (typeof whisperText === "string" && whisperText.length > 2) {
+      const gptPrompt = selectedPrompt
+        ? selectedPrompt + "\n\n" + whisperText
+        : whisperText;
+      console.log("gpt-prompt", gptPrompt);
+      const gptAnswer = await sendToGPT(gptPrompt);
       console.log("gptAnswer", gptAnswer);
     }
   }
@@ -141,7 +150,7 @@ const Home = () => {
       {leevisAnswer ? (
         <View style={styles.answerBox}>
           <ScrollView>
-            <Text style={styles.text}>{leevisAnswer}</Text>
+            <Text style={styles.leevisAnswerText}>{leevisAnswer}</Text>
           </ScrollView>
         </View>
       ) : null}
@@ -150,11 +159,25 @@ const Home = () => {
         <View style={styles.button}>
           <Button
             title={recording ? "Lopeta nauhoitus" : "Nauhoita kysymys"}
-            onPress={recording ? stopRecording : startRecording}
+            onPress={recording ? handleStopRecording : handleStartRecording}
             color={theme.RichBlack2}
           />
         </View>
         <View style={{ flex: 1 }} />
+      </View>
+      <View>
+        {/* <Text style={styles.text}>You selected: {selectedPrompt}</Text> */}
+        <Picker
+          style={styles.leevisAnswerText}
+          selectedValue={selectedPrompt}
+          onValueChange={(itemValue, _itemIndex) =>
+            setSelectedPrompt(itemValue)
+          }
+        >
+          {prompts.map((prompt, i) => (
+            <Picker.Item label={prompt.name} value={prompt.prompt} key={i} />
+          ))}
+        </Picker>
       </View>
     </View>
   );

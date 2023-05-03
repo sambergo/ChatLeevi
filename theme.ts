@@ -36,7 +36,7 @@ export const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "flex-end",
   },
-  text: {
+  leevisAnswerText: {
     color: theme.NearWhite,
     marginBottom: 16,
     padding: 8,
@@ -44,6 +44,10 @@ export const styles = StyleSheet.create({
     maxWidth: "90%",
     minHeight: "20%",
     fontSize: 20,
+  },
+  text: {
+    fontSize: 20,
+    color: theme.NearWhite,
   },
   buttonContainer: {
     flexDirection: "row",

@@ -25,8 +25,11 @@ const Settings = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={[styles.text, { marginTop: 24 }]}>OpenAI API key</Text>
+      <Text style={[styles.leevisAnswerText, { marginTop: 24 }]}>
+        OpenAI API key
+      </Text>
       <TextInput
+        value={inputKey}
         onChangeText={(text) => setInputKey(text)}
         placeholder="sk-.........."
         style={customStyles.input}
@@ -35,12 +38,20 @@ const Settings = () => {
         <Button
           title="Save key"
           onPress={() => {
-            saveApiKey(inputKey);
+            saveApiKey(inputKey)
+              .then(() => {
+                setCurrentKey(inputKey.slice(0, 9) + "***************");
+                setInputKey("");
+                alert("API key saved successfully!");
+              })
+              .catch(() => {
+                alert("Error saving API key.");
+              });
           }}
           color={theme.FrenchGray}
         />
       </View>
-      <Text style={[styles.text, { marginTop: 16 }]}>
+      <Text style={[styles.leevisAnswerText, { marginTop: 16 }]}>
         Current key: {currentKey.slice(0, 9)}***************
       </Text>
     </View>
