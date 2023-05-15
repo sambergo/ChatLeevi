@@ -144,6 +144,10 @@ const Home = () => {
     }
   }
 
+  async function handleSpeakAnswer() {
+    Speech.speak(leevisAnswer, { language: "fi" });
+  }
+
   return (
     <View style={styles.container}>
       <MainCharacter />
@@ -155,15 +159,20 @@ const Home = () => {
         </View>
       ) : null}
       <View style={styles.buttonContainer}>
-        <View style={{ flex: 1 }} />
         <View style={styles.button}>
           <Button
             title={recording ? "Lopeta nauhoitus" : "Nauhoita kysymys"}
             onPress={recording ? handleStopRecording : handleStartRecording}
+            color={recording ? theme.WarningRed : theme.RichBlack2}
+          />
+        </View>
+        <View style={styles.button}>
+          <Button
+            title="Lue vastaus"
+            onPress={handleSpeakAnswer}
             color={theme.RichBlack2}
           />
         </View>
-        <View style={{ flex: 1 }} />
       </View>
       <View>
         {/* <Text style={styles.text}>You selected: {selectedPrompt}</Text> */}

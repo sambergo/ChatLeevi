@@ -7,7 +7,9 @@ export const theme = {
   FrenchGray: "#AFB2B5",
   Charcoal: "#2F3C46",
   NearWhite: "#F2F2F2",
+  WarningRed: "#FF5733",
 };
+
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
