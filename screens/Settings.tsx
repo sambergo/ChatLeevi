@@ -48,7 +48,7 @@ const Settings = () => {
                 alert("Error saving API key.");
               });
           }}
-          color={theme.FrenchGray}
+          color={theme.overlay2}
         />
       </View>
       <Text style={[styles.leevisAnswerText, { marginTop: 16 }]}>
@@ -62,16 +62,16 @@ export default Settings;
 
 const customStyles = StyleSheet.create({
   input: {
-    backgroundColor: theme.Charcoal,
-    color: theme.FrenchGray,
+    backgroundColor: theme.surface0,
+    color: theme.overlay2,
     borderRadius: 4,
     padding: 12,
     marginTop: 8,
     width: "80%",
   },
   buttonContainer: {
-    backgroundColor: theme.FrenchGray,
-    borderColor: theme.BattleshipGray,
+    backgroundColor: theme.overlay2,
+    borderColor: theme.overlay0,
     // borderWidth: 1,
     borderRadius: 4,
     marginTop: 16,

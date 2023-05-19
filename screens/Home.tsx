@@ -1,12 +1,12 @@
+import { Picker } from "@react-native-picker/picker";
 import { Audio } from "expo-av";
 import { Recording } from "expo-av/build/Audio";
 import * as Speech from "expo-speech";
 import React, { useCallback, useEffect, useState } from "react";
-import { Button, Image, ScrollView, Text, View } from "react-native";
+import { Image, Pressable, ScrollView, Text, View } from "react-native";
+import { prompts } from "../prompts";
 import { styles, theme } from "../theme";
 import { getSavedKey } from "./Settings";
-import { prompts } from "../prompts";
-import { Picker } from "@react-native-picker/picker";
 
 const MainCharacter = () => (
   <View style={styles.mainCharacterContainer}>
@@ -159,23 +159,22 @@ const Home = () => {
         </View>
       ) : null}
       <View style={styles.buttonContainer}>
-        <View style={styles.button}>
-          <Button
-            title={recording ? "Lopeta nauhoitus" : "Nauhoita kysymys"}
-            onPress={recording ? handleStopRecording : handleStartRecording}
-            color={recording ? theme.WarningRed : theme.RichBlack2}
-          />
-        </View>
-        <View style={styles.button}>
-          <Button
-            title="Lue vastaus"
-            onPress={handleSpeakAnswer}
-            color={theme.RichBlack2}
-          />
-        </View>
+        <Pressable
+          onPress={recording ? handleStopRecording : handleStartRecording}
+          style={{
+            ...styles.button,
+            backgroundColor: recording ? theme.red : theme.overlay1,
+          }}
+        >
+          <Text style={styles.buttonText}>
+            {recording ? "Lopeta nauhoitus" : "Nauhoita kysymys"}
+          </Text>
+        </Pressable>
+        <Pressable onPress={handleSpeakAnswer} style={styles.button}>
+          <Text style={styles.buttonText}>Lue vastaus</Text>
+        </Pressable>
       </View>
       <View>
-        {/* <Text style={styles.text}>You selected: {selectedPrompt}</Text> */}
         <Picker
           style={styles.leevisAnswerText}
           selectedValue={selectedPrompt}
