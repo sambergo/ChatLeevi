@@ -204,7 +204,7 @@ const Home = () => {
               />
               <TextInput
                 placeholder="Kirjoita kysymys tai nauhoita"
-                placeholderTextColor={theme.text}
+                placeholderTextColor={theme.subtext0}
                 value={userQuestion}
                 style={styles.inputText}
                 onChangeText={(t) => setUserQuestion(t)}

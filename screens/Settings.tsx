@@ -32,7 +32,7 @@ const Settings = () => {
         value={inputKey}
         onChangeText={(text) => setInputKey(text)}
         placeholder="sk-.........."
-        placeholderTextColor={theme.text}
+        placeholderTextColor={theme.subtext0}
         style={customStyles.input}
       />
       <View style={customStyles.buttonContainer}>
