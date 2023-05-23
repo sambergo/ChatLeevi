@@ -3,7 +3,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Feather } from "@expo/vector-icons";
 import Home from "./screens/Home";
 import Settings from "./screens/Settings";
-import { theme } from "./theme";
+import { styles, theme } from "./theme";
 import { useNavigation } from "@react-navigation/native";
 
 const Stack = createNativeStackNavigator();
@@ -17,20 +17,20 @@ const AppNavigator = () => {
         headerStyle: {
           backgroundColor: theme.base,
         },
-        headerTintColor: "white",
+        headerTintColor: theme.text,
         headerRight: () => (
           <Feather
             name="settings"
             size={24}
-            color="white"
+            color={theme.text}
             style={{ paddingRight: 20 }}
-            onPress={() => navigation.navigate("Settings")}
+            onPress={() => navigation.navigate("Asetukset")}
           />
         ),
       }}
     >
-      <Stack.Screen name="Home" component={Home} />
-      <Stack.Screen name="Settings" component={Settings} />
+      <Stack.Screen name="ChatLeevi" component={Home} />
+      <Stack.Screen name="Asetukset" component={Settings} />
     </Stack.Navigator>
   );
 };

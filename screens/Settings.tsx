@@ -26,7 +26,7 @@ const Settings = () => {
   return (
     <View style={styles.container}>
       <Text style={[styles.leevisAnswerText, { marginTop: 24 }]}>
-        OpenAI API key
+        OpenAI API avain
       </Text>
       <TextInput
         value={inputKey}
@@ -36,7 +36,7 @@ const Settings = () => {
       />
       <View style={customStyles.buttonContainer}>
         <Button
-          title="Save key"
+          title="Tallenna"
           onPress={() => {
             saveApiKey(inputKey)
               .then(() => {
@@ -52,7 +52,7 @@ const Settings = () => {
         />
       </View>
       <Text style={[styles.leevisAnswerText, { marginTop: 16 }]}>
-        Current key: {currentKey.slice(0, 9)}***************
+        Nykyinen avain: {currentKey.slice(0, 9)}***************
       </Text>
     </View>
   );

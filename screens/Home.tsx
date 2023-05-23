@@ -1,9 +1,17 @@
+import { FontAwesome5, MaterialIcons } from "@expo/vector-icons";
 import { Picker } from "@react-native-picker/picker";
 import { Audio } from "expo-av";
 import { Recording } from "expo-av/build/Audio";
 import * as Speech from "expo-speech";
 import React, { useCallback, useEffect, useState } from "react";
-import { Image, Pressable, ScrollView, Text, View } from "react-native";
+import {
+  Image,
+  Pressable,
+  ScrollView,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
 import { prompts } from "../prompts";
 import { styles, theme } from "../theme";
 import { getSavedKey } from "./Settings";
@@ -11,7 +19,7 @@ import { getSavedKey } from "./Settings";
 const MainCharacter = () => (
   <View style={styles.mainCharacterContainer}>
     <Image
-      source={require("../assets/academic-leevi-transformed.png")}
+      source={require("../assets/mj-leevi-nobg.png")}
       style={styles.mainCharacterImage}
     />
   </View>
@@ -19,6 +27,7 @@ const MainCharacter = () => (
 
 const Home = () => {
   const [recording, setRecording] = useState<Recording | undefined>(undefined);
+  const [userQuestion, setUserQuestion] = useState<string>("");
   const [leevisAnswer, setLeevisAnswer] = useState<string>(
     "Hau hau, kuinka voin auttaa?"
   );
@@ -134,58 +143,76 @@ const Home = () => {
     const uri = recording.getURI();
     console.log("Recording stopped and stored at", uri);
     const { text: whisperText } = await sendToWhisper(uri);
-    if (typeof whisperText === "string" && whisperText.length > 2) {
-      const gptPrompt = selectedPrompt
-        ? selectedPrompt + "\n\n" + whisperText
-        : whisperText;
-      console.log("gpt-prompt", gptPrompt);
-      const gptAnswer = await sendToGPT(gptPrompt);
-      console.log("gptAnswer", gptAnswer);
-    }
+    await handleSend(whisperText);
   }
 
   async function handleSpeakAnswer() {
     Speech.speak(leevisAnswer, { language: "fi" });
   }
 
+  async function handleSend(question: string) {
+    console.log("send:", question);
+    if (typeof question === "string" && question.length > 2) {
+      const gptPrompt = selectedPrompt
+        ? selectedPrompt + "\n\n" + question
+        : question;
+      console.log("gpt-prompt", gptPrompt);
+      const gptAnswer = await sendToGPT(gptPrompt);
+      console.log("gptAnswer", gptAnswer);
+    }
+  }
+
   return (
     <View style={styles.container}>
       <MainCharacter />
-      {leevisAnswer ? (
-        <View style={styles.answerBox}>
-          <ScrollView>
-            <Text style={styles.leevisAnswerText}>{leevisAnswer}</Text>
-          </ScrollView>
-        </View>
-      ) : null}
-      <View style={styles.buttonContainer}>
-        <Pressable
-          onPress={recording ? handleStopRecording : handleStartRecording}
-          style={{
-            ...styles.button,
-            backgroundColor: recording ? theme.red : theme.overlay1,
-          }}
-        >
-          <Text style={styles.buttonText}>
-            {recording ? "Lopeta nauhoitus" : "Nauhoita kysymys"}
-          </Text>
-        </Pressable>
-        <Pressable onPress={handleSpeakAnswer} style={styles.button}>
-          <Text style={styles.buttonText}>Lue vastaus</Text>
-        </Pressable>
+      <View style={styles.answerBox}>
+        <ScrollView>
+          <Text style={styles.leevisAnswerText}>{leevisAnswer}</Text>
+          <FontAwesome5
+            name="volume-up"
+            size={24}
+            color={theme.flamingo}
+            style={styles.volumeUpIcon}
+            onPress={handleSpeakAnswer}
+          />
+        </ScrollView>
       </View>
       <View>
-        <Picker
-          style={styles.leevisAnswerText}
-          selectedValue={selectedPrompt}
-          onValueChange={(itemValue, _itemIndex) =>
-            setSelectedPrompt(itemValue)
-          }
-        >
-          {prompts.map((prompt, i) => (
-            <Picker.Item label={prompt.name} value={prompt.prompt} key={i} />
-          ))}
-        </Picker>
+        <View style={styles.inputBox}>
+          <FontAwesome5
+            onPress={recording ? handleStopRecording : handleStartRecording}
+            name="microphone"
+            size={24}
+            color={theme.flamingo}
+          />
+          <TextInput
+            placeholder="Kirjoita kysymys tai nauhoita"
+            placeholderTextColor={theme.text}
+            value={userQuestion}
+            style={styles.inputText}
+            onChangeText={(t) => setUserQuestion(t)}
+          ></TextInput>
+          <MaterialIcons
+            onPress={async () => {
+              setUserQuestion("");
+              await handleSend(userQuestion);
+            }}
+            name="send"
+            size={24}
+            color={theme.blue}
+          />
+        </View>
+        {/* <Picker */}
+        {/*   style={styles.leevisAnswerText} */}
+        {/*   selectedValue={selectedPrompt} */}
+        {/*   onValueChange={(itemValue, _itemIndex) => */}
+        {/*     setSelectedPrompt(itemValue) */}
+        {/*   } */}
+        {/* > */}
+        {/*   {prompts.map((prompt, i) => ( */}
+        {/*     <Picker.Item label={prompt.name} value={prompt.prompt} key={i} /> */}
+        {/*   ))} */}
+        {/* </Picker> */}
       </View>
     </View>
   );

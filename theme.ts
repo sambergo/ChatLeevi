@@ -66,6 +66,31 @@ export const styles = StyleSheet.create({
     minHeight: "20%",
     fontSize: 20,
   },
+
+  volumeUpIcon: {
+    position: "absolute",
+    top: 10,
+    right: 10,
+    zIndex: 1,
+  },
+  inputBox: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    width: "90%",
+    minWidth: "90%",
+    paddingVertical: 16,
+    paddingHorizontal: 16,
+    margin: 8,
+    borderWidth: 2,
+    borderColor: theme.sky,
+    borderRadius: 20,
+  },
+  inputText: {
+    fontSize: 15,
+    color: theme.text,
+    // margin: 1,
+  },
   text: {
     fontSize: 20,
     color: theme.text,
