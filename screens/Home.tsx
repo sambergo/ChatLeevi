@@ -165,55 +165,71 @@ const Home = () => {
   return (
     <View style={styles.container}>
       <MainCharacter />
-      <View style={styles.answerBox}>
-        <ScrollView>
-          <Text style={styles.leevisAnswerText}>{leevisAnswer}</Text>
+      {recording ? (
+        <View style={styles.stopRecording}>
+          <Text style={{ ...styles.text, paddingBottom: 10 }}>
+            Lopeta nauhoitus klikkaamalla kuvaketta
+          </Text>
           <FontAwesome5
-            name="volume-up"
-            size={24}
+            name="microphone-slash"
+            size={96}
             color={theme.flamingo}
-            style={styles.volumeUpIcon}
-            onPress={handleSpeakAnswer}
-          />
-        </ScrollView>
-      </View>
-      <View>
-        <View style={styles.inputBox}>
-          <FontAwesome5
-            onPress={recording ? handleStopRecording : handleStartRecording}
-            name="microphone"
-            size={24}
-            color={theme.flamingo}
-          />
-          <TextInput
-            placeholder="Kirjoita kysymys tai nauhoita"
-            placeholderTextColor={theme.text}
-            value={userQuestion}
-            style={styles.inputText}
-            onChangeText={(t) => setUserQuestion(t)}
-          ></TextInput>
-          <MaterialIcons
-            onPress={async () => {
-              setUserQuestion("");
-              await handleSend(userQuestion);
-            }}
-            name="send"
-            size={24}
-            color={theme.blue}
+            onPress={handleStopRecording}
           />
         </View>
-        {/* <Picker */}
-        {/*   style={styles.leevisAnswerText} */}
-        {/*   selectedValue={selectedPrompt} */}
-        {/*   onValueChange={(itemValue, _itemIndex) => */}
-        {/*     setSelectedPrompt(itemValue) */}
-        {/*   } */}
-        {/* > */}
-        {/*   {prompts.map((prompt, i) => ( */}
-        {/*     <Picker.Item label={prompt.name} value={prompt.prompt} key={i} /> */}
-        {/*   ))} */}
-        {/* </Picker> */}
-      </View>
+      ) : (
+        <>
+          <View style={styles.answerBox}>
+            <ScrollView>
+              <Text style={styles.leevisAnswerText}>{leevisAnswer}</Text>
+              <FontAwesome5
+                name="volume-up"
+                size={24}
+                color={theme.flamingo}
+                style={styles.volumeUpIcon}
+                onPress={handleSpeakAnswer}
+              />
+            </ScrollView>
+          </View>
+          <View>
+            <View style={styles.inputBox}>
+              <FontAwesome5
+                onPress={recording ? handleStopRecording : handleStartRecording}
+                name="microphone"
+                size={24}
+                color={theme.flamingo}
+              />
+              <TextInput
+                placeholder="Kirjoita kysymys tai nauhoita"
+                placeholderTextColor={theme.text}
+                value={userQuestion}
+                style={styles.inputText}
+                onChangeText={(t) => setUserQuestion(t)}
+              ></TextInput>
+              <MaterialIcons
+                onPress={async () => {
+                  setUserQuestion("");
+                  await handleSend(userQuestion);
+                }}
+                name="send"
+                size={24}
+                color={theme.blue}
+              />
+            </View>
+            {/* <Picker */}
+            {/*   style={styles.leevisAnswerText} */}
+            {/*   selectedValue={selectedPrompt} */}
+            {/*   onValueChange={(itemValue, _itemIndex) => */}
+            {/*     setSelectedPrompt(itemValue) */}
+            {/*   } */}
+            {/* > */}
+            {/*   {prompts.map((prompt, i) => ( */}
+            {/*     <Picker.Item label={prompt.name} value={prompt.prompt} key={i} /> */}
+            {/*   ))} */}
+            {/* </Picker> */}
+          </View>
+        </>
+      )}
     </View>
   );
 };

@@ -50,6 +50,11 @@ export const styles = StyleSheet.create({
     height: "100%",
     width: "90%",
   },
+  stopRecording: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "space-around",
+  },
   answerBox: {
     borderWidth: 2,
     borderColor: theme.surface0,
