@@ -1,13 +1,14 @@
 # ChatLeevi
 
-ChatLeevi is a chatbot app created using React Native and powered by OpenAI's GPT-3 and Whisper APIs. The app allows users to ask questions and chat with Leevi, a cute Finnish dog character who responds with helpful answers and sometimes a bit of humor.
+ChatLeevi is a React Native chatbot app powered by OpenAI's GPT-3.5.
+Currently only in finnish.
 
 ## Features
 
-- Voice recording: users can ask questions by recording their voice and sending the recording to Leevi, who will respond with an audio message.
-- Text input: users can also type their questions for Leevi to answer.
-- Predefined prompts: users can choose from a list of predefined prompts to help guide their conversation with Leevi.
-- OpenAI integration: the app uses the GPT-3 and Whisper APIs from OpenAI to provide intelligent responses to user questions and to transcribe voice recordings.
+- User can input their questions through text or voice recording
+- App provides audio and text-based responses
+- The app uses OpenAI's GPT-3 for generating responses
+- The user can save their OpenAI API key in the settings
 
 ## Getting started
 
@@ -18,13 +19,14 @@ To get started with ChatLeevi, follow these steps:
 3. Install the Expo CLI with `npm install -g expo-cli`
 4. Start the app with `expo start`
 
-Note: Voice recording and transcription features may not work properly on Android simulators. It is recommended to test these features on a physical device or iOS simulator.
+## Usage
 
-## Structure of the app
+The app can be run on an iOS or Android emulator, or on a physical device with the necessary Expo app installed.
 
-The app has the following main components:
+Once the app is running, the user can type or record their questions and receive corresponding responses from the app.
 
-- `Home`: the main screen of the app, where users can ask questions and see Leevi's responses.
-- `Settings`: a screen where users can save their OpenAI API key for future use.
+To save an OpenAI API key, the user can navigate to the settings page and input their API key. The key will be stored securely and can be retrieved or updated in the same settings page.
 
-The app also has various helper functions for working with audio recordings, sending requests to OpenAI APIs, and handling user interactions with the app.
+## License
+
+Distributed under the MIT License. See `LICENSE` for more information.
