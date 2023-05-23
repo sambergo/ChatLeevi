@@ -157,6 +157,7 @@ const Home = () => {
       console.log("gpt-prompt", gptPrompt);
       const gptAnswer = await sendToGPT(gptPrompt);
       console.log("gptAnswer", gptAnswer);
+      setUserQuestion("");
     }
   }
 
@@ -207,12 +208,10 @@ const Home = () => {
                 value={userQuestion}
                 style={styles.inputText}
                 onChangeText={(t) => setUserQuestion(t)}
+                onSubmitEditing={() => handleSend(userQuestion)}
               ></TextInput>
               <MaterialIcons
-                onPress={async () => {
-                  setUserQuestion("");
-                  await handleSend(userQuestion);
-                }}
+                onPress={() => handleSend(userQuestion)}
                 name="send"
                 size={24}
                 color={theme.blue}
