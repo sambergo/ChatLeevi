@@ -32,15 +32,19 @@ const Settings = () => {
         value={inputKey}
         onChangeText={(text) => setInputKey(text)}
         placeholder="sk-.........."
+        placeholderTextColor={theme.text}
         style={customStyles.input}
       />
       <View style={customStyles.buttonContainer}>
         <Button
           title="Tallenna"
+          disabled={inputKey.length < 20}
           onPress={() => {
             saveApiKey(inputKey)
               .then(() => {
-                setCurrentKey(inputKey.slice(0, 9) + "***************");
+                setCurrentKey(
+                  inputKey.slice(0, 3) + "..." + inputKey.slice(-4)
+                );
                 setInputKey("");
                 alert("API key saved successfully!");
               })
@@ -52,7 +56,7 @@ const Settings = () => {
         />
       </View>
       <Text style={[styles.leevisAnswerText, { marginTop: 16 }]}>
-        Nykyinen avain: {currentKey.slice(0, 9)}***************
+        Nykyinen avain: {currentKey.slice(0, 3) + "..." + currentKey.slice(-4)}
       </Text>
     </View>
   );
@@ -72,7 +76,6 @@ const customStyles = StyleSheet.create({
   buttonContainer: {
     backgroundColor: theme.overlay2,
     borderColor: theme.overlay0,
-    // borderWidth: 1,
     borderRadius: 4,
     marginTop: 16,
     width: "80%",

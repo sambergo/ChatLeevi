@@ -71,7 +71,6 @@ export const styles = StyleSheet.create({
     minHeight: "20%",
     fontSize: 20,
   },
-
   volumeUpIcon: {
     position: "absolute",
     top: 10,
@@ -94,7 +93,6 @@ export const styles = StyleSheet.create({
   inputText: {
     fontSize: 15,
     color: theme.text,
-    // margin: 1,
   },
   text: {
     fontSize: 20,
@@ -125,5 +123,20 @@ export const styles = StyleSheet.create({
     right: 0,
     margin: 16,
     color: theme.overlay0,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  spinner: {
+    width: 40,
+    height: 40,
+    borderWidth: 4,
+    borderColor: theme.green,
+    borderRadius: 20,
+    borderTopColor: theme.blue,
+    borderLeftColor: theme.blue,
+    margin: 10,
   },
 });

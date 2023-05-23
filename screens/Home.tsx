@@ -1,18 +1,10 @@
 import { FontAwesome5, MaterialIcons } from "@expo/vector-icons";
-import { Picker } from "@react-native-picker/picker";
 import { Audio } from "expo-av";
 import { Recording } from "expo-av/build/Audio";
 import * as Speech from "expo-speech";
 import React, { useCallback, useEffect, useState } from "react";
-import {
-  Image,
-  Pressable,
-  ScrollView,
-  Text,
-  TextInput,
-  View,
-} from "react-native";
-import { prompts } from "../prompts";
+import { Image, ScrollView, Text, TextInput, View } from "react-native";
+import Loading from "../components/Loading";
 import { styles, theme } from "../theme";
 import { getSavedKey } from "./Settings";
 
@@ -31,7 +23,7 @@ const Home = () => {
   const [leevisAnswer, setLeevisAnswer] = useState<string>(
     "Hau hau, kuinka voin auttaa?"
   );
-
+  const [waitingGPT, setWaitingGPT] = useState<boolean>(false);
   const [selectedPrompt, setSelectedPrompt] = useState("");
 
   const [OPENAI_API_KEY, setOpenaiApiKey] = useState<string>("");
@@ -39,7 +31,9 @@ const Home = () => {
   useEffect(() => {
     const fetchSavedKey = async () => {
       const savedKey = await getSavedKey();
-      setOpenaiApiKey(savedKey ?? "");
+      if (savedKey) {
+        setOpenaiApiKey(savedKey);
+      }
     };
     fetchSavedKey();
   }, []);
@@ -80,7 +74,7 @@ const Home = () => {
         console.error("OPENAI API KEY NOT FOUND");
         return null;
       }
-
+      setWaitingGPT(true);
       console.log("prompt", prompt);
       const model = "gpt-3.5-turbo";
       try {
@@ -103,6 +97,7 @@ const Home = () => {
         const msg = data.choices[0].message.content;
         console.log("msg", msg);
         setLeevisAnswer(msg);
+        setWaitingGPT(false);
         Speech.speak(msg, { language: "fi" });
         return msg;
       } catch (error) {
@@ -134,6 +129,9 @@ const Home = () => {
   }
 
   async function handleStopRecording() {
+    if (!recording) {
+      return;
+    }
     console.log("Stopping recording..");
     setRecording(undefined);
     await recording.stopAndUnloadAsync();
@@ -165,7 +163,11 @@ const Home = () => {
   return (
     <View style={styles.container}>
       <MainCharacter />
-      {recording ? (
+      {waitingGPT ? (
+        <View style={styles.stopRecording}>
+          <Loading />
+        </View>
+      ) : recording ? (
         <View style={styles.stopRecording}>
           <Text style={{ ...styles.text, paddingBottom: 10 }}>
             Lopeta nauhoitus klikkaamalla kuvaketta
