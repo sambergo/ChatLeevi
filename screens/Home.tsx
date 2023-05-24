@@ -5,17 +5,9 @@ import * as Speech from "expo-speech";
 import React, { useCallback, useEffect, useState } from "react";
 import { Image, ScrollView, Text, TextInput, View } from "react-native";
 import Loading from "../components/Loading";
+import MainCharacter from "../components/MainCharacter";
 import { styles, theme } from "../theme";
 import { getSavedKey } from "./Settings";
-
-const MainCharacter = () => (
-  <View style={styles.mainCharacterContainer}>
-    <Image
-      source={require("../assets/mj-leevi-nobg.png")}
-      style={styles.mainCharacterImage}
-    />
-  </View>
-);
 
 const Home = () => {
   const [recording, setRecording] = useState<Recording | undefined>(undefined);
@@ -24,6 +16,7 @@ const Home = () => {
     "Hau hau, kuinka voin auttaa?"
   );
   const [waitingGPT, setWaitingGPT] = useState<boolean>(false);
+  const [isSpeaking, setIsSpeaking] = useState<boolean>(false);
   const [selectedPrompt, setSelectedPrompt] = useState("");
 
   const [OPENAI_API_KEY, setOpenaiApiKey] = useState<string>("");
@@ -37,36 +30,6 @@ const Home = () => {
     };
     fetchSavedKey();
   }, []);
-
-  const sendToWhisper = async (uri: string): Promise<any> => {
-    const model = "whisper-1";
-    const formData = new FormData();
-    formData.append("file", {
-      uri,
-      type: "audio/wav",
-      name: "recording.wav",
-    });
-    formData.append("model", model);
-    formData.append("language", "fi");
-    try {
-      const response = await fetch(
-        "https://api.openai.com/v1/audio/transcriptions",
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${OPENAI_API_KEY}`,
-          },
-          body: formData,
-        }
-      );
-      const data = await response.json();
-      console.log("data:", data);
-      return data;
-    } catch (error) {
-      console.error(error);
-      return null;
-    }
-  };
 
   const sendToGPT = useCallback(
     async (prompt: string): Promise<any> => {
@@ -98,10 +61,15 @@ const Home = () => {
         console.log("msg", msg);
         setLeevisAnswer(msg);
         setWaitingGPT(false);
-        Speech.speak(msg, { language: "fi" });
+        setIsSpeaking(true);
+        Speech.speak(msg, {
+          language: "fi",
+          onDone: () => setIsSpeaking(false),
+        });
         return msg;
       } catch (error) {
         setWaitingGPT(false);
+        setIsSpeaking(false);
         console.error(error);
         setLeevisAnswer("ERROR:\n" + error);
         Speech.speak(
@@ -146,12 +114,16 @@ const Home = () => {
     });
     const uri = recording.getURI();
     console.log("Recording stopped and stored at", uri);
-    const { text: whisperText } = await sendToWhisper(uri);
+    const { text: whisperText } = await sendToWhisper(uri, OPENAI_API_KEY);
     await handleSend(whisperText);
   }
 
   async function handleSpeakAnswer() {
-    Speech.speak(leevisAnswer, { language: "fi" });
+    setIsSpeaking(true);
+    Speech.speak(leevisAnswer, {
+      language: "fi",
+      onDone: () => setIsSpeaking(false),
+    });
   }
 
   async function handleSend(question: string) {
@@ -191,13 +163,26 @@ const Home = () => {
           <View style={styles.answerBox}>
             <ScrollView>
               <Text style={styles.leevisAnswerText}>{leevisAnswer}</Text>
-              <FontAwesome5
-                name="volume-up"
-                size={24}
-                color={theme.flamingo}
-                style={styles.volumeUpIcon}
-                onPress={handleSpeakAnswer}
-              />
+              {isSpeaking ? (
+                <FontAwesome5
+                  name="stop"
+                  size={24}
+                  color={theme.flamingo}
+                  style={styles.volumeUpIcon}
+                  onPress={() => {
+                    Speech.stop();
+                    setIsSpeaking(false);
+                  }}
+                />
+              ) : (
+                <FontAwesome5
+                  name="volume-up"
+                  size={24}
+                  color={theme.flamingo}
+                  style={styles.volumeUpIcon}
+                  onPress={handleSpeakAnswer}
+                />
+              )}
             </ScrollView>
           </View>
           <View>
