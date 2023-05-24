@@ -1,4 +1,7 @@
-const sendToWhisper = async (uri: string, openai_key: string): Promise<any> => {
+export const sendToWhisper = async (
+  uri: string,
+  openai_key: string
+): Promise<any> => {
   const model = "whisper-1";
   const formData = new FormData();
   formData.append("file", {

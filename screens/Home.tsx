@@ -3,9 +3,10 @@ import { Audio } from "expo-av";
 import { Recording } from "expo-av/build/Audio";
 import * as Speech from "expo-speech";
 import React, { useCallback, useEffect, useState } from "react";
-import { Image, ScrollView, Text, TextInput, View } from "react-native";
+import { ScrollView, Text, TextInput, View } from "react-native";
 import Loading from "../components/Loading";
 import MainCharacter from "../components/MainCharacter";
+import { sendToWhisper } from "../services/sendToWhisper";
 import { styles, theme } from "../theme";
 import { getSavedKey } from "./Settings";
 

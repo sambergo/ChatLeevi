@@ -1,18 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { View, Text, TextInput, StyleSheet, Button } from "react-native";
 import * as SecureStore from "expo-secure-store";
-import { theme, styles } from "../theme";
+import React, { useEffect, useState } from "react";
+import { Button, StyleSheet, Text, TextInput, View } from "react-native";
+import { styles, theme } from "../theme";
 
 const saveApiKey = async (value: string) => {
   await SecureStore.setItemAsync("apikey", value);
 };
 
 export const getSavedKey = async () => {
-  let result = await SecureStore.getItemAsync("apikey");
-  if (result) {
-    return result;
-  }
-  return null;
+  return await SecureStore.getItemAsync("apikey");
 };
 
 const Settings = () => {
