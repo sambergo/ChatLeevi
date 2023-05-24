@@ -101,7 +101,13 @@ const Home = () => {
         Speech.speak(msg, { language: "fi" });
         return msg;
       } catch (error) {
+        setWaitingGPT(false);
         console.error(error);
+        setLeevisAnswer("ERROR:\n" + error);
+        Speech.speak(
+          "Olen pahoillani, ohjelmassa tapahtui virhe. Yritä uudelleen.",
+          { language: "fi" }
+        );
         return null;
       }
     },
