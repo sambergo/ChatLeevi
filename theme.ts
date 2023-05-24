@@ -61,6 +61,7 @@ export const styles = StyleSheet.create({
     borderRadius: 8,
     flex: 1,
     justifyContent: "flex-end",
+    width: "95%",
   },
   leevisAnswerText: {
     color: theme.text,
@@ -81,8 +82,7 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    width: "90%",
-    minWidth: "90%",
+    width: "95%",
     paddingVertical: 16,
     paddingHorizontal: 16,
     margin: 8,

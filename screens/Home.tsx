@@ -185,41 +185,39 @@ const Home = () => {
               )}
             </ScrollView>
           </View>
-          <View>
-            <View style={styles.inputBox}>
-              <FontAwesome5
-                onPress={recording ? handleStopRecording : handleStartRecording}
-                name="microphone"
-                size={24}
-                color={theme.flamingo}
-              />
-              <TextInput
-                placeholder="Kirjoita kysymys tai nauhoita"
-                placeholderTextColor={theme.subtext0}
-                value={userQuestion}
-                style={styles.inputText}
-                onChangeText={(t) => setUserQuestion(t)}
-                onSubmitEditing={() => handleSend(userQuestion)}
-              ></TextInput>
-              <MaterialIcons
-                onPress={() => handleSend(userQuestion)}
-                name="send"
-                size={24}
-                color={theme.blue}
-              />
-            </View>
-            {/* <Picker */}
-            {/*   style={styles.leevisAnswerText} */}
-            {/*   selectedValue={selectedPrompt} */}
-            {/*   onValueChange={(itemValue, _itemIndex) => */}
-            {/*     setSelectedPrompt(itemValue) */}
-            {/*   } */}
-            {/* > */}
-            {/*   {prompts.map((prompt, i) => ( */}
-            {/*     <Picker.Item label={prompt.name} value={prompt.prompt} key={i} /> */}
-            {/*   ))} */}
-            {/* </Picker> */}
+          <View style={styles.inputBox}>
+            <FontAwesome5
+              onPress={recording ? handleStopRecording : handleStartRecording}
+              name="microphone"
+              size={24}
+              color={theme.flamingo}
+            />
+            <TextInput
+              placeholder="Kirjoita kysymys tai nauhoita"
+              placeholderTextColor={theme.subtext0}
+              value={userQuestion}
+              style={styles.inputText}
+              onChangeText={(t) => setUserQuestion(t)}
+              onSubmitEditing={() => handleSend(userQuestion)}
+            ></TextInput>
+            <MaterialIcons
+              onPress={() => handleSend(userQuestion)}
+              name="send"
+              size={24}
+              color={theme.blue}
+            />
           </View>
+          {/* <Picker */}
+          {/*   style={styles.leevisAnswerText} */}
+          {/*   selectedValue={selectedPrompt} */}
+          {/*   onValueChange={(itemValue, _itemIndex) => */}
+          {/*     setSelectedPrompt(itemValue) */}
+          {/*   } */}
+          {/* > */}
+          {/*   {prompts.map((prompt, i) => ( */}
+          {/*     <Picker.Item label={prompt.name} value={prompt.prompt} key={i} /> */}
+          {/*   ))} */}
+          {/* </Picker> */}
         </>
       )}
     </View>
