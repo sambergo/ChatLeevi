@@ -91,8 +91,10 @@ export const styles = StyleSheet.create({
     borderRadius: 20,
   },
   inputText: {
+    flex: 1,
     fontSize: 15,
     color: theme.text,
+    marginHorizontal: 16,
   },
   text: {
     fontSize: 20,
