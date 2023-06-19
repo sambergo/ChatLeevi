@@ -1,0 +1,7 @@
+{
+  "currentKey": "Nykyinen avain",
+  "welcome": "Hau hau, kuinka voin auttaa?",
+  "speakError": "Olen pahoillani, ohjelmassa tapahtui virhe. Yritä uudelleen.",
+  "stopRecording": "Lopeta nauhoitus klikkaamalla kuvaketta",
+  "inputPlaceholder": "Kirjoita kysymys tai nauhoita"
+}

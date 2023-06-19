@@ -9,13 +9,12 @@ import MainCharacter from "../components/MainCharacter";
 import { sendToWhisper } from "../services/sendToWhisper";
 import { styles, theme } from "../theme";
 import { getSavedKey } from "./Settings";
+import { t } from "i18next";
 
 const Home = () => {
   const [recording, setRecording] = useState<Recording | undefined>(undefined);
   const [userQuestion, setUserQuestion] = useState<string>("");
-  const [leevisAnswer, setLeevisAnswer] = useState<string>(
-    "Hau hau, kuinka voin auttaa?"
-  );
+  const [leevisAnswer, setLeevisAnswer] = useState<string>(t("welcome"));
   const [waitingGPT, setWaitingGPT] = useState<boolean>(false);
   const [isSpeaking, setIsSpeaking] = useState<boolean>(false);
   const [selectedPrompt, setSelectedPrompt] = useState("");
@@ -64,7 +63,7 @@ const Home = () => {
         setWaitingGPT(false);
         setIsSpeaking(true);
         Speech.speak(msg, {
-          language: "fi",
+          language: "fi", // TODO: vaihda
           onDone: () => setIsSpeaking(false),
         });
         return msg;
@@ -74,8 +73,8 @@ const Home = () => {
         console.error(error);
         setLeevisAnswer("ERROR:\n" + error);
         Speech.speak(
-          "Olen pahoillani, ohjelmassa tapahtui virhe. Yritä uudelleen.",
-          { language: "fi" }
+          t("speakError"),
+          { language: "fi" } // TODO: vaihda
         );
         return null;
       }
@@ -122,7 +121,7 @@ const Home = () => {
   async function handleSpeakAnswer() {
     setIsSpeaking(true);
     Speech.speak(leevisAnswer, {
-      language: "fi",
+      language: "fi", // TODO: vaihda
       onDone: () => setIsSpeaking(false),
     });
   }
@@ -150,7 +149,7 @@ const Home = () => {
       ) : recording ? (
         <View style={styles.stopRecording}>
           <Text style={{ ...styles.text, paddingBottom: 10 }}>
-            Lopeta nauhoitus klikkaamalla kuvaketta
+            {t("stopRecording")}
           </Text>
           <FontAwesome5
             name="microphone-slash"
@@ -194,7 +193,7 @@ const Home = () => {
               color={theme.flamingo}
             />
             <TextInput
-              placeholder="Kirjoita kysymys tai nauhoita"
+              placeholder={t("inputPlaceholder")}
               placeholderTextColor={theme.subtext0}
               value={userQuestion}
               style={styles.inputText}

@@ -2,13 +2,24 @@ import * as SecureStore from "expo-secure-store";
 import React, { useEffect, useState } from "react";
 import { Button, StyleSheet, Text, TextInput, View } from "react-native";
 import { styles, theme } from "../theme";
+import "../i18n";
+import { t } from "i18next";
+import LanguageSelector from "../components/LanguageSelector";
+
+export const getSavedKey = async () => {
+  return await SecureStore.getItemAsync("apikey");
+};
+
+export const getLanguage = async () => {
+  return await SecureStore.getItemAsync("language");
+};
 
 const saveApiKey = async (value: string) => {
   await SecureStore.setItemAsync("apikey", value);
 };
 
-export const getSavedKey = async () => {
-  return await SecureStore.getItemAsync("apikey");
+const saveLanguage = async (language: string) => {
+  await SecureStore.setItemAsync("language", language);
 };
 
 const Settings = () => {
@@ -52,8 +63,10 @@ const Settings = () => {
         />
       </View>
       <Text style={[styles.leevisAnswerText, { marginTop: 16 }]}>
-        Nykyinen avain: {currentKey.slice(0, 3) + "..." + currentKey.slice(-4)}
+        {t("currentKey")}:{" "}
+        {currentKey.slice(0, 3) + "..." + currentKey.slice(-4)}
       </Text>
+      <LanguageSelector />
     </View>
   );
 };
