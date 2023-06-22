@@ -1,30 +1,29 @@
 import * as SecureStore from "expo-secure-store";
 import React, { useEffect, useState } from "react";
-import { Button, StyleSheet, Text, TextInput, View } from "react-native";
+import {
+  Button,
+  Pressable,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
 import { styles, theme } from "../theme";
-import "../i18n";
+import { useTranslation } from "react-i18next";
 import { t } from "i18next";
-import LanguageSelector from "../components/LanguageSelector";
 
 export const getSavedKey = async () => {
   return await SecureStore.getItemAsync("apikey");
-};
-
-export const getLanguage = async () => {
-  return await SecureStore.getItemAsync("language");
 };
 
 const saveApiKey = async (value: string) => {
   await SecureStore.setItemAsync("apikey", value);
 };
 
-const saveLanguage = async (language: string) => {
-  await SecureStore.setItemAsync("language", language);
-};
-
 const Settings = () => {
   const [inputKey, setInputKey] = useState<string>("");
   const [currentKey, setCurrentKey] = useState<string>("");
+  const { i18n } = useTranslation();
 
   useEffect(() => {
     getSavedKey().then((value) => setCurrentKey(value ?? ""));
@@ -33,7 +32,7 @@ const Settings = () => {
   return (
     <View style={styles.container}>
       <Text style={[styles.leevisAnswerText, { marginTop: 24 }]}>
-        OpenAI API avain
+        {t("openAiApiKey")}
       </Text>
       <TextInput
         value={inputKey}
@@ -44,7 +43,7 @@ const Settings = () => {
       />
       <View style={customStyles.buttonContainer}>
         <Button
-          title="Tallenna"
+          title={t("buttonSave")}
           disabled={inputKey.length < 20}
           onPress={() => {
             saveApiKey(inputKey)
@@ -53,10 +52,10 @@ const Settings = () => {
                   inputKey.slice(0, 3) + "..." + inputKey.slice(-4)
                 );
                 setInputKey("");
-                alert("API key saved successfully!");
+                alert(t("apiKeySaved"));
               })
               .catch(() => {
-                alert("Error saving API key.");
+                alert(t("apiKeyError"));
               });
           }}
           color={theme.overlay2}
@@ -66,7 +65,14 @@ const Settings = () => {
         {t("currentKey")}:{" "}
         {currentKey.slice(0, 3) + "..." + currentKey.slice(-4)}
       </Text>
-      <LanguageSelector />
+      <View style={customStyles.flagContainer}>
+        <Pressable onPress={() => i18n.changeLanguage("en")}>
+          <Text style={customStyles.flagText}>🇬🇧</Text>
+        </Pressable>
+        <Pressable onPress={() => i18n.changeLanguage("fi")}>
+          <Text style={customStyles.flagText}>🇫🇮</Text>
+        </Pressable>
+      </View>
     </View>
   );
 };
@@ -88,5 +94,13 @@ const customStyles = StyleSheet.create({
     borderRadius: 4,
     marginTop: 16,
     width: "80%",
+  },
+  flagText: {
+    fontSize: 40,
+    margin: 25,
+  },
+  flagContainer: {
+    display: "flex",
+    flexDirection: "row",
   },
 });

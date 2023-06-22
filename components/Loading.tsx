@@ -1,6 +1,7 @@
 import React from "react";
 import { Animated, Easing, Text, View } from "react-native";
 import { styles } from "../theme";
+import { t } from "i18next";
 
 const Loading = () => {
   const spinValue = new Animated.Value(0);
@@ -21,7 +22,7 @@ const Loading = () => {
 
   return (
     <View style={styles.loadingContainer}>
-      <Text style={styles.text}>Valmistellaan vastausta</Text>
+      <Text style={styles.text}>{t("loadingText")}</Text>
       <Animated.View
         style={[styles.spinner, { transform: [{ rotate: spin }] }]}
       />

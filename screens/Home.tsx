@@ -2,14 +2,16 @@ import { FontAwesome5, MaterialIcons } from "@expo/vector-icons";
 import { Audio } from "expo-av";
 import { Recording } from "expo-av/build/Audio";
 import * as Speech from "expo-speech";
+import { t } from "i18next";
 import React, { useCallback, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { ScrollView, Text, TextInput, View } from "react-native";
 import Loading from "../components/Loading";
 import MainCharacter from "../components/MainCharacter";
+import i18n from "../i18n";
 import { sendToWhisper } from "../services/sendToWhisper";
 import { styles, theme } from "../theme";
 import { getSavedKey } from "./Settings";
-import { t } from "i18next";
 
 const Home = () => {
   const [recording, setRecording] = useState<Recording | undefined>(undefined);
@@ -17,7 +19,7 @@ const Home = () => {
   const [leevisAnswer, setLeevisAnswer] = useState<string>(t("welcome"));
   const [waitingGPT, setWaitingGPT] = useState<boolean>(false);
   const [isSpeaking, setIsSpeaking] = useState<boolean>(false);
-  const [selectedPrompt, setSelectedPrompt] = useState("");
+  const [selectedPrompt, _setSelectedPrompt] = useState("");
 
   const [OPENAI_API_KEY, setOpenaiApiKey] = useState<string>("");
 
@@ -30,6 +32,14 @@ const Home = () => {
     };
     fetchSavedKey();
   }, []);
+
+  useEffect(() => {
+    setLeevisAnswer(t("welcome"));
+  }, [i18n.exists("welcome")]);
+
+  i18n.on("languageChanged", () => {
+    setLeevisAnswer(t("welcome"));
+  });
 
   const sendToGPT = useCallback(
     async (prompt: string): Promise<any> => {
@@ -63,7 +73,7 @@ const Home = () => {
         setWaitingGPT(false);
         setIsSpeaking(true);
         Speech.speak(msg, {
-          language: "fi", // TODO: vaihda
+          language: i18n.language,
           onDone: () => setIsSpeaking(false),
         });
         return msg;
@@ -72,10 +82,7 @@ const Home = () => {
         setIsSpeaking(false);
         console.error(error);
         setLeevisAnswer("ERROR:\n" + error);
-        Speech.speak(
-          t("speakError"),
-          { language: "fi" } // TODO: vaihda
-        );
+        Speech.speak(t("speakError"), { language: i18n.language });
         return null;
       }
     },
@@ -121,7 +128,7 @@ const Home = () => {
   async function handleSpeakAnswer() {
     setIsSpeaking(true);
     Speech.speak(leevisAnswer, {
-      language: "fi", // TODO: vaihda
+      language: i18n.language,
       onDone: () => setIsSpeaking(false),
     });
   }

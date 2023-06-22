@@ -3,5 +3,12 @@
   "welcome": "Hau hau, kuinka voin auttaa?",
   "speakError": "Olen pahoillani, ohjelmassa tapahtui virhe. Yritä uudelleen.",
   "stopRecording": "Lopeta nauhoitus klikkaamalla kuvaketta",
-  "inputPlaceholder": "Kirjoita kysymys tai nauhoita"
+  "inputPlaceholder": "Kirjoita kysymys tai nauhoita",
+  "buttonSave": "Tallenna",
+  "openAiApiKey": "OpenAI API avain",
+  "apiKeySaved": "API key tallennettu!",
+  "apiKeyError": "Virhe tallentaessa API avainta",
+  "screenSettings": "Asetukset",
+  "language": "Kieli",
+  "loadingText": "Valmistellaan vastausta"
 }

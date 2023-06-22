@@ -24,13 +24,13 @@ const AppNavigator = () => {
             size={24}
             color={theme.text}
             style={{ paddingRight: 20 }}
-            onPress={() => navigation.navigate("Asetukset")}
+            onPress={() => navigation.navigate("Settings")}
           />
         ),
       }}
     >
       <Stack.Screen name="ChatLeevi" component={Home} />
-      <Stack.Screen name="Asetukset" component={Settings} />
+      <Stack.Screen name="Settings" component={Settings} />
     </Stack.Navigator>
   );
 };

@@ -3,5 +3,12 @@
   "welcome": "Woof woof, how can I help?",
   "speakError": "Sorry, there was an error in the program. Please try again.",
   "stopRecording": "Stop recording by clicking the icon",
-  "inputPlaceholder": "Type your question or record"
+  "inputPlaceholder": "Type your question or record",
+  "buttonSave": "Save",
+  "openAiApiKey": "OpenAI API key",
+  "apiKeySaved": "API key saved successfully!",
+  "apiKeyError": "Error saving API key.",
+  "screenSettings": "Settings",
+  "language": "Language",
+  "loadingText": "Preparing an answer"
 }
