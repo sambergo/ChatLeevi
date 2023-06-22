@@ -1,7 +1,7 @@
 # ChatLeevi
 
 ChatLeevi is a React Native chatbot app powered by OpenAI's GPT-3.5.
-Currently only in finnish.
+Currently in english and finnish.
 
 ## Features
 
