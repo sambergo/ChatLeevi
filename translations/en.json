@@ -10,5 +10,6 @@
   "apiKeyError": "Error saving API key.",
   "screenSettings": "Settings",
   "language": "Language",
-  "loadingText": "Preparing an answer"
+  "loadingText": "Preparing an answer",
+  "copiedClipboard": "Copied to clipboard!"
 }

@@ -65,6 +65,7 @@ export const styles = StyleSheet.create({
   },
   leevisAnswerText: {
     color: theme.text,
+    marginTop: 36,
     marginBottom: 16,
     padding: 8,
     minWidth: "90%",
@@ -72,10 +73,16 @@ export const styles = StyleSheet.create({
     minHeight: "20%",
     fontSize: 20,
   },
+  clipboardIcon: {
+    position: "absolute",
+    top: 10,
+    left: 15,
+    zIndex: 1,
+  },
   volumeUpIcon: {
     position: "absolute",
     top: 10,
-    right: 10,
+    right: 15,
     zIndex: 1,
   },
   inputBox: {

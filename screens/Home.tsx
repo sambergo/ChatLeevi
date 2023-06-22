@@ -4,8 +4,8 @@ import { Recording } from "expo-av/build/Audio";
 import * as Speech from "expo-speech";
 import { t } from "i18next";
 import React, { useCallback, useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
-import { ScrollView, Text, TextInput, View } from "react-native";
+import { ScrollView, Text, TextInput, ToastAndroid, View } from "react-native";
+import * as Clipboard from "expo-clipboard";
 import Loading from "../components/Loading";
 import MainCharacter from "../components/MainCharacter";
 import i18n from "../i18n";
@@ -169,27 +169,40 @@ const Home = () => {
         <>
           <View style={styles.answerBox}>
             <ScrollView>
-              <Text style={styles.leevisAnswerText}>{leevisAnswer}</Text>
-              {isSpeaking ? (
+              <View>
+                {isSpeaking ? (
+                  <FontAwesome5
+                    name="stop"
+                    size={24}
+                    color={theme.flamingo}
+                    style={styles.volumeUpIcon}
+                    onPress={() => {
+                      Speech.stop();
+                      setIsSpeaking(false);
+                    }}
+                  />
+                ) : (
+                  <FontAwesome5
+                    name="volume-up"
+                    size={24}
+                    color={theme.flamingo}
+                    style={styles.volumeUpIcon}
+                    onPress={handleSpeakAnswer}
+                  />
+                )}
+
                 <FontAwesome5
-                  name="stop"
+                  name="clipboard"
                   size={24}
                   color={theme.flamingo}
-                  style={styles.volumeUpIcon}
+                  style={styles.clipboardIcon}
                   onPress={() => {
-                    Speech.stop();
-                    setIsSpeaking(false);
+                    Clipboard.setStringAsync(leevisAnswer);
+                    ToastAndroid.show(t("copiedClipboard"), ToastAndroid.SHORT);
                   }}
                 />
-              ) : (
-                <FontAwesome5
-                  name="volume-up"
-                  size={24}
-                  color={theme.flamingo}
-                  style={styles.volumeUpIcon}
-                  onPress={handleSpeakAnswer}
-                />
-              )}
+              </View>
+              <Text style={styles.leevisAnswerText}>{leevisAnswer}</Text>
             </ScrollView>
           </View>
           <View style={styles.inputBox}>

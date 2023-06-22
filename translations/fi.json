@@ -10,5 +10,6 @@
   "apiKeyError": "Virhe tallentaessa API avainta",
   "screenSettings": "Asetukset",
   "language": "Kieli",
-  "loadingText": "Valmistellaan vastausta"
+  "loadingText": "Valmistellaan vastausta",
+  "copiedClipboard": "Vastaus kopioitu leikepöydälle!"
 }
