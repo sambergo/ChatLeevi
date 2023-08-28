@@ -9,7 +9,7 @@ Currently in english and finnish.
 
 - User can input their questions through text or voice recording
 - App provides audio and text-based responses
-- The app uses OpenAI's GPT-3 for generating responses
+- The app uses OpenAI's GPT-3.5 for generating responses
 - The user can save their OpenAI API key in the settings
 
 ## Getting started
