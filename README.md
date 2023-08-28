@@ -29,6 +29,10 @@ Once the app is running, the user can type or record their questions and receive
 
 To save an OpenAI API key, the user can navigate to the settings page and input their API key. The key will be stored securely and can be retrieved or updated in the same settings page.
 
+## Install (android)
+
+Download apk for android from [releases page](https://github.com/sambergo/ChatLeevi/releases)
+
 ## License
 
 Distributed under the MIT License. See `LICENSE` for more information.
