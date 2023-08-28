@@ -31,7 +31,7 @@ To save an OpenAI API key, the user can navigate to the settings page and input 
 
 ## Install (android)
 
-Download apk for android from [releases page](https://github.com/sambergo/ChatLeevi/releases)
+Download apk from [releases page](https://github.com/sambergo/ChatLeevi/releases)
 
 ## License
 
