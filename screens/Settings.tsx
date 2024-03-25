@@ -107,7 +107,7 @@ const Settings = () => {
             </ScrollView>
             <Pressable
               style={[customStyles.button, customStyles.buttonClose]}
-              onPress={() => setModalVisible(!modalVisible)}
+              onPress={() => setModalVisible(false)}
             >
               <Text style={customStyles.textStyle}>Close</Text>
             </Pressable>
