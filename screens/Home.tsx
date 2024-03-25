@@ -11,7 +11,7 @@ import MainCharacter from "../components/MainCharacter";
 import i18n from "../i18n";
 import { sendToWhisper } from "../services/sendToWhisper";
 import { styles, theme } from "../theme";
-import { getSavedKey } from "./Settings";
+import { getSavedKey, getSavedModel } from "./Settings";
 
 const Home = () => {
   const [recording, setRecording] = useState<Recording | undefined>(undefined);
@@ -49,7 +49,8 @@ const Home = () => {
       }
       setWaitingGPT(true);
       console.log("prompt", prompt);
-      const model = "gpt-3.5-turbo";
+      const model = await getSavedModel();
+      console.log("model", model);
       try {
         const URL = "https://api.openai.com/v1/chat/completions";
         const requestOptions = {
@@ -86,7 +87,7 @@ const Home = () => {
         return null;
       }
     },
-    [OPENAI_API_KEY]
+    [OPENAI_API_KEY],
   );
 
   async function handleStartRecording() {
@@ -100,7 +101,7 @@ const Home = () => {
 
       console.log("Starting recording..");
       const { recording } = await Audio.Recording.createAsync(
-        Audio.RecordingOptionsPresets.HIGH_QUALITY
+        Audio.RecordingOptionsPresets.HIGH_QUALITY,
       );
       setRecording(recording);
       console.log("Recording started");

@@ -11,5 +11,6 @@
   "screenSettings": "Settings",
   "language": "Language",
   "loadingText": "Preparing an answer",
+  "selectModel": "Select model",
   "copiedClipboard": "Copied to clipboard!"
 }

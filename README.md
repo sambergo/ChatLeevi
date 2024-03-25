@@ -1,6 +1,6 @@
 # ChatLeevi
 
-ChatLeevi is a React Native chatbot app powered by OpenAI's GPT-3.5.
+ChatLeevi is a React Native chatbot app powered by OpenAI's GPT models.
 Currently in english and finnish.
 
 ![image](./img/app.jpeg)
@@ -9,7 +9,7 @@ Currently in english and finnish.
 
 - User can input their questions through text or voice recording
 - App provides audio and text-based responses
-- The app uses OpenAI's GPT-3.5 for generating responses
+- The app uses OpenAI's GPT models for generating responses
 - The user can save their OpenAI API key in the settings
 
 ## Getting started

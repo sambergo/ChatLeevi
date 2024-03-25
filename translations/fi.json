@@ -11,5 +11,6 @@
   "screenSettings": "Asetukset",
   "language": "Kieli",
   "loadingText": "Valmistellaan vastausta",
+  "selectModel": "Valitse kielimalli",
   "copiedClipboard": "Vastaus kopioitu leikepöydälle!"
 }
