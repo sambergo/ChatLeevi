@@ -52,6 +52,10 @@ const Settings = () => {
   };
 
   async function listOpenAIModels() {
+    if (!currentKey) {
+      alert(t("setUpKey"));
+      return;
+    }
     try {
       const response = await fetch("https://api.openai.com/v1/models", {
         method: "GET",

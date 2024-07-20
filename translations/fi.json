@@ -12,5 +12,6 @@
   "language": "Kieli",
   "loadingText": "Valmistellaan vastausta",
   "selectModel": "Valitse kielimalli",
-  "copiedClipboard": "Vastaus kopioitu leikepöydälle!"
+  "copiedClipboard": "Vastaus kopioitu leikepöydälle!",
+  "setUpKey": "Aseta API avain ensin"
 }

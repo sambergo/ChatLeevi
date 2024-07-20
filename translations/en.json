@@ -12,5 +12,6 @@
   "language": "Language",
   "loadingText": "Preparing an answer",
   "selectModel": "Select model",
-  "copiedClipboard": "Copied to clipboard!"
+  "copiedClipboard": "Copied to clipboard!",
+  "setUpKey": "Set up API key first"
 }
